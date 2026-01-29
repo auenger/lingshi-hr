@@ -54,27 +54,6 @@
           "每周保证实习3天以上，实习期至少3个月。"
         ]
       }
-    },
-    {
-      "id": "new-job-1769667631570",
-      "title": "AI 开发实习生",
-      "tags": [
-        "团队 Nice",
-        "老人带",
-        "五休二"
-      ],
-      "location": "上海",
-      "type": "全职",
-      "experience": "大学应届",
-      "snippet": "反正就是玩",
-      "detail": {
-        "responsibilities": [
-          "没啥职责，玩就行了"
-        ],
-        "requirements": [
-          "有一个 h200 显卡最好"
-        ]
-      }
     }
   ]
 }

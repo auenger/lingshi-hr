@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加入领视</title>
+    <meta name="description" content="领视招聘，期待您的加入。">
+    <link rel="icon" href="/resource/ico.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/resource/ico.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <img src="./resource/logo.png" alt="领视">
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#about">关于我们</a></li>
+                    <li><a href="#jobs">招聘岗位</a></li>
+                    <li><a href="#contact">联系方式</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="jobs" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1>全渠道全场景的 SaaS 服务商</h1>
+            <p>致力于为语言教育、素质教育、岗位培训、消费医疗等领域客户<br>打造移动互联网生态系统综合解决方案</p>
+
+            <!-- Job Board Moved Here -->
+            <div class="job-categories" id="job-categories">
+                <!-- Categories will be injected here via JS -->
+                <button class="category-btn active">全部</button>
+            </div>
+
+            <div class="job-list" id="job-list">
+                <!-- Jobs will be injected here via JS -->
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i> 正在加载岗位信息...
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section about-section">
+        <div class="container">
+            <h2 class="section-title">关于领智云</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>领智云是全渠道全场景的 SaaS 服务商，我们致力于为教育培训行业提供深度定制化的数字化解决方案。</p>
+                    <p>我们打造个性化专属 APP，适配 iOS/安卓系统，支持启动页、主页、分享页深度自定义，深化品牌形象。服务覆盖素质教育、职业教育、技能培训等多个领域。</p>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <h3>35万+</h3>
+                            <p>全国机构社群</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>1000万+</h3>
+                            <p>全国学员社群</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>10万+</h3>
+                            <p>机构付费客户</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <!-- Placeholder for office or tech image -->
+                    <div class="img-placeholder"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section contact-section">
+        <div class="container">
+            <h2 class="section-title">联系我们</h2>
+            <div class="contact-grid">
+                <!-- Phone removed -->
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <h4>邮箱</h4>
+                    <p>xkben@lingshi.com</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>地址</h4>
+                    <p>上海市浦东新区耀元路58号环球都会广场2号楼6、7层</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 领智云. All Rights Reserved. 沪ICP备14020178号-29</p>
+        </div>
+    </footer>
+
+    <!-- Job Modal -->
+    <div id="jobModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeJobModal()">&times;</span>
+            <div class="modal-header">
+                <h2>新媒体运营</h2>
+                <div class="modal-tags">
+                    <span>1年以上经验</span>
+                    <span>专科及以上</span>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <div class="jd-section">
+                    <h3>岗位职责</h3>
+                    <ul>
+                        <li>通过内容运营为主的方式，负责小红书，视频号等新媒体平台引流推广工作，包括从 0-1 的搭建、内容策划、编辑制作、日常发布、维护互动与数据分析等；</li>
+                        <li>积极主动地通过各渠道宣传公司品牌和产品，策划符合平台调性的内容并撰写高质量、高传播度的内容，包括但不限于图文；</li>
+                        <li>保证自媒体平台内容的视觉表现，组织发起创意头脑风暴，提出优秀方案思路和创意想法；</li>
+                        <li>通过不同话术对潜在客户资源进行挖需和回访，激活潜在客户资源；</li>
+                        <li>协助营销进行客户资源的转化，实现客户资源口碑推荐和裂变。</li>
+                    </ul>
+                </div>
+
+                <div class="jd-section">
+                    <h3>任职要求</h3>
+                    <ul>
+                        <li>专科及以上学历，1年以上新媒体运营推广等自媒体账号运营经验；</li>
+                        <li>熟知自媒体平台运营规则，拥有对社会热点事件的选题嗅觉，具备发现热点话题、紧跟热门话题的能力；</li>
+                        <li>具备较强的文字驾驭能力，会基础的视频剪辑，擅长不同风格和文体的文案写作，善于捕捉热点，编撰文案，引爆视频；</li>
+                        <li>有良好的团队合作精神，具有独立思考能力、网络观察能力和应变能力；</li>
+                        <li>对新媒体内容运营工作充满热情，较强的抗压能力和目标感。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-block" onclick="openApplyForm()">快捷投递简历</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Apply Form Modal (Hidden by default, overlays over job modal or replaces it) -->
+    <div id="applyModal" class="modal">
+        <div class="modal-content apply-content">
+            <span class="close-btn" onclick="closeApplyModal()">&times;</span>
+            <h3>投递简历 - 新媒体运营</h3>
+            <form id="applyForm" onsubmit="handleApply(event)" enctype="multipart/form-data">
+                <!-- FormSubmit Configuration -->
+                <input type="hidden" name="_subject" value="新媒体运营 - 简历投递 (来自官网)">
+                <input type="hidden" name="_captcha" value="false"> <!-- Disable captcha page if possible -->
+                <input type="text" name="_honey" style="display:none"> <!-- Spam protection -->
+                <input type="hidden" name="applied_job" id="applied_job_input"> <!-- Automatically filled -->
+
+                <div class="form-group">
+                    <label for="name">姓名</label>
+                    <input type="text" id="name" name="name" required placeholder="您的姓名">
+                </div>
+                <div class="form-group">
+                    <label for="phone">联系电话</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="您的手机号码">
+                </div>
+                <div class="form-group">
+                    <label for="resume">上传简历 (PDF/Word, 最大 3MB)</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="resume" name="attachment" accept=".pdf,.doc,.docx" required>
+                        <div class="file-upload-visual">
+                            <i class="fas fa-cloud-upload-alt"></i> 点击上传简历
+                        </div>
+                    </div>
+                </div>
+                <!-- Hidden helper text -->
+                <p style="font-size: 12px; color: #999; margin-bottom: 10px;">* 首次投递可能需要邮箱验证，提交后请留意您的邮箱。</p>
+
+                <a href="#" class="back-link" onclick="backToJobModal()">返回详情</a>
+                <button type="submit" class="btn btn-primary btn-block">确认投递</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-notification"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

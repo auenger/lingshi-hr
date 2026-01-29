@@ -1,0 +1,17 @@
+[
+    {
+        "id": "social",
+        "name": "社会招聘",
+        "file": "data/social.json"
+    },
+    {
+        "id": "campus",
+        "name": "校园招聘",
+        "file": "data/campus.json"
+    },
+    {
+        "id": "intern",
+        "name": "实习招聘",
+        "file": "data/intern.json"
+    }
+]

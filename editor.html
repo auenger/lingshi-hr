@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>岗位数据编辑器</title>
+    <link rel="icon" href="/resource/ico.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/resource/ico.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --bg-color: #f8f9fa;
+            --white: #ffffff;
+            --border-color: #e9ecef;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            margin-top: 0;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 15px 40px;
+            border: 2px solid var(--border-color);
+            background: var(--white);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+            font-weight: 500;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-tab:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .category-tab.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .category-tab .data-status {
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .category-tab.active .data-status {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .file-upload-section {
+            border: 2px dashed var(--border-color);
+            padding: 40px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload-section:hover {
+            border-color: var(--primary-color);
+            background-color: #f0f7ff;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .editor-section {
+            margin-top: 30px;
+        }
+
+        .category-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #f5f5f5;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        .category-input:read-only {
+            background-color: #f5f5f5;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        .job-item {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .job-item.collapsed .job-body {
+            display: none;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            background: #f8f9fa;
+            padding: 10px 20px;
+            margin: -20px -20px 20px -20px;
+            border-bottom: 1px solid var(--border-color);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .job-header h3 {
+            margin: 0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 14px;
+            color: #666;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Dynamic Lists (Responsibilities/Requirements) */
+        .dynamic-list-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-icon {
+            padding: 8px;
+        }
+
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+        .actions-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #fff;
+            padding: 20px;
+            position: sticky;
+            bottom: 0;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+            margin: 0 -30px -30px -30px;
+            border-radius: 0 0 12px 12px;
+            z-index: 10;
+        }
+
+        .tag-badge {
+            display: inline-block;
+            background: #e6f7ff;
+            color: #0066cc;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 5px;
+        }
+
+        .auto-save-indicator {
+            text-align: center;
+            padding: 10px;
+            color: #28a745;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .auto-save-indicator.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>岗位数据编辑器</h1>
+
+        <!-- Category Tabs -->
+        <div class="category-tabs">
+            <div class="category-tab" data-category="intern" onclick="selectCategory('intern')">
+                <i class="fas fa-graduation-cap"></i>
+                <span>实习生</span>
+                <span class="data-status" id="status-intern">未导入</span>
+            </div>
+            <div class="category-tab" data-category="campus" onclick="selectCategory('campus')">
+                <i class="fas fa-university"></i>
+                <span>校园招聘</span>
+                <span class="data-status" id="status-campus">未导入</span>
+            </div>
+            <div class="category-tab" data-category="social" onclick="selectCategory('social')">
+                <i class="fas fa-briefcase"></i>
+                <span>社会招聘</span>
+                <span class="data-status" id="status-social">未导入</span>
+            </div>
+        </div>
+
+        <div id="uploadSection">
+            <div class="file-upload-section" onclick="document.getElementById('fileInput').click()">
+                <input type="file" id="fileInput" class="hidden" accept=".json">
+                <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: #ccc; margin-bottom: 15px;"></i>
+                <h3 id="uploadTitle">请先选择分类，然后上传 JSON 文件</h3>
+                <p style="color: #999;" id="uploadHint">实习生: intern.json | 校园招聘: campus.json | 社会招聘: social.json</p>
+            </div>
+        </div>
+
+        <div id="editorArea" class="hidden">
+            <div class="form-group">
+                <label>岗位分类名称 (Category) - 不可修改</label>
+                <input type="text" id="categoryName" class="category-input" readonly>
+            </div>
+
+            <div class="auto-save-indicator" id="autoSaveIndicator">
+                <i class="fas fa-check-circle"></i> 已自动保存
+            </div>
+
+            <div id="jobsContainer">
+                <!-- Job items will be rendered here -->
+            </div>
+
+            <div class="actions-bar">
+                <button class="btn btn-secondary" onclick="addJob()">
+                    <i class="fas fa-plus"></i> 新增岗位
+                </button>
+                <button class="btn btn-success" onclick="downloadJson()">
+                    <i class="fas fa-download"></i> 导出保存 JSON
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 数据存储
+        const STORAGE_KEY = 'lyhr_job_editor_data';
+        let currentData = { category: "", jobs: [] };
+        let currentFileName = "data.json";
+        let currentCategory = null;
+        let autoSaveTimer = null;
+
+        // 定义分类信息
+        const categoryInfo = {
+            intern: { name: '实习生', fileName: 'intern.json', categoryLabel: 'Intern' },
+            campus: { name: '校园招聘', fileName: 'campus.json', categoryLabel: 'Campus' },
+            social: { name: '社会招聘', fileName: 'social.json', categoryLabel: 'Social' }
+        };
+
+        // 初始化：从 localStorage 加载数据
+        function init() {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                updateDataStatus();
+            } else {
+                updateDataStatus();
+            }
+        }
+
+        // 从 localStorage 获取指定分类的数据
+        function getCategoryData(category) {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                return data[category] || null;
+            }
+            return null;
+        }
+
+        // 保存数据到 localStorage
+        function saveToLocalStorage() {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            let allData = savedData ? JSON.parse(savedData) : {};
+            allData[currentCategory] = {
+                category: currentInfo().categoryLabel,
+                jobs: currentData.jobs,
+                fileName: currentInfo().fileName,
+                savedAt: new Date().toISOString()
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(allData));
+            updateDataStatus();
+            showAutoSaveIndicator();
+        }
+
+        // 显示自动保存提示
+        function showAutoSaveIndicator() {
+            const indicator = document.getElementById('autoSaveIndicator');
+            indicator.classList.add('show');
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 2000);
+        }
+
+        // 获取当前分类信息
+        function currentInfo() {
+            return categoryInfo[currentCategory] || { name: '', fileName: '', categoryLabel: '' };
+        }
+
+        // 更新数据状态显示
+        function updateDataStatus() {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            const data = savedData ? JSON.parse(savedData) : {};
+
+            for (const cat in categoryInfo) {
+                const statusEl = document.getElementById(`status-${cat}`);
+                if (data[cat] && data[cat].jobs && data[cat].jobs.length > 0) {
+                    const jobCount = data[cat].jobs.length;
+                    const savedTime = data[cat].savedAt ? new Date(data[cat].savedAt).toLocaleString('zh-CN') : '';
+                    statusEl.textContent = `${jobCount} 个岗位`;
+                    statusEl.style.background = 'rgba(40, 167, 69, 0.3)';
+                } else {
+                    statusEl.textContent = '未导入';
+                    statusEl.style.background = 'rgba(255, 255, 255, 0.3)';
+                }
+            }
+        }
+
+        // 选择分类
+        function selectCategory(category) {
+            currentCategory = category;
+
+            // 更新选项卡样式
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-category="${category}"]`).classList.add('active');
+
+            // 检查是否有已保存的数据
+            const savedCategoryData = getCategoryData(category);
+
+            // 更新上传区域提示
+            document.getElementById('uploadTitle').textContent = `上传 ${currentInfo().name} JSON 文件`;
+            document.getElementById('uploadHint').textContent = `推荐文件: ${currentInfo().fileName}`;
+
+            // 如果有已保存的数据，直接加载
+            if (savedCategoryData) {
+                loadData(savedCategoryData);
+                document.querySelector('.file-upload-section').classList.add('hidden');
+            } else {
+                // 如果没有数据，显示上传区域
+                document.getElementById('editorArea').classList.add('hidden');
+                document.querySelector('.file-upload-section').classList.remove('hidden');
+            }
+        }
+
+        // 文件上传处理
+        document.getElementById('fileInput').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (!currentCategory) {
+                alert('请先选择分类！');
+                return;
+            }
+
+            currentFileName = file.name;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const json = JSON.parse(e.target.result);
+                    loadData(json);
+                    saveToLocalStorage();
+                } catch (err) {
+                    alert("JSON 解析失败，请检查文件格式");
+                    console.error(err);
+                }
+            };
+            reader.readAsText(file);
+            // 重置文件输入，允许重复上传同一文件
+            this.value = '';
+        });
+
+        function loadData(data) {
+            // 使用分类固定的 category 值
+            currentData = {
+                category: currentInfo().categoryLabel,
+                jobs: data.jobs || []
+            };
+            document.getElementById('categoryName').value = currentData.category;
+            document.getElementById('editorArea').classList.remove('hidden');
+            document.querySelector('.file-upload-section').classList.add('hidden');
+            renderJobs();
+        }
+
+        function renderJobs() {
+            const container = document.getElementById('jobsContainer');
+            container.innerHTML = '';
+
+            if (!currentData.jobs) currentData.jobs = [];
+
+            currentData.jobs.forEach((job, index) => {
+                const jobEl = document.createElement('div');
+                jobEl.className = 'job-item collapsed';
+                jobEl.innerHTML = `
+                <div class="job-header" onclick="toggleJob(this)">
+                    <div>
+                        <h3>${job.title || '未命名岗位'}</h3>
+                        <div style="margin-top:5px;">
+                            ${(job.tags || []).map(t => `<span class="tag-badge">${t}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div>
+                        <i class="fas fa-chevron-down" style="color:#999;"></i>
+                        <button class="btn btn-danger btn-icon" style="margin-left: 10px;" onclick="removeJob(event, ${index})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="job-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>岗位 ID (唯一标识)</label>
+                            <input type="text" value="${job.id || ''}" onchange="updateJob(${index}, 'id', this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label>岗位名称</label>
+                            <input type="text" value="${job.title || ''}" onchange="updateJob(${index}, 'title', this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label>工作地点</label>
+                            <input type="text" value="${job.location || ''}" onchange="updateJob(${index}, 'location', this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label>工作类型 (全职/实习)</label>
+                            <input type="text" value="${job.type || ''}" onchange="updateJob(${index}, 'type', this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label>经验要求</label>
+                            <input type="text" value="${job.experience || ''}" onchange="updateJob(${index}, 'experience', this.value)">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>标签 (Tags) - 逗号分隔</label>
+                            <input type="text" value="${(job.tags || []).join(', ')}" onchange="updateTags(${index}, this.value)">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>简述 (Snippet)</label>
+                            <textarea onchange="updateJob(${index}, 'snippet', this.value)">${job.snippet || ''}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>岗位职责 (Responsibilities)</label>
+                        <div id="resp-list-${index}">
+                            ${renderListItems(job.detail?.responsibilities, index, 'responsibilities')}
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="addListItem(${index}, 'responsibilities')">+ 添加职责</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label>任职要求 (Requirements)</label>
+                        <div id="req-list-${index}">
+                            ${renderListItems(job.detail?.requirements, index, 'requirements')}
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="addListItem(${index}, 'requirements')">+ 添加要求</button>
+                    </div>
+                </div>
+            `;
+                container.appendChild(jobEl);
+            });
+        }
+
+        function renderListItems(items, jobIndex, type) {
+            if (!items) return '';
+            return items.map((item, i) => `
+            <div class="dynamic-list-item">
+                <input type="text" value="${item.replace(/"/g, '&quot;')}" onchange="updateListItem(${jobIndex}, '${type}', ${i}, this.value)">
+                <button class="btn btn-danger btn-icon" onclick="removeListItem(${jobIndex}, '${type}', ${i})"><i class="fas fa-times"></i></button>
+            </div>
+        `).join('');
+        }
+
+        // --- Actions ---
+
+        function toggleJob(header) {
+            header.parentElement.classList.toggle('collapsed');
+        }
+
+        function addJob() {
+            currentData.jobs.push({
+                id: "new-job-" + Date.now(),
+                title: "新岗位",
+                tags: [],
+                location: "上海",
+                type: "全职",
+                experience: "",
+                snippet: "",
+                detail: {
+                    responsibilities: [],
+                    requirements: []
+                }
+            });
+            renderJobs();
+            scheduleAutoSave();
+            setTimeout(() => {
+                const items = document.querySelectorAll('.job-item');
+                if (items.length > 0) items[items.length - 1].classList.remove('collapsed');
+            }, 50);
+        }
+
+        function removeJob(e, index) {
+            e.stopPropagation();
+            if (!confirm("确定要删除这个岗位吗？")) return;
+            currentData.jobs.splice(index, 1);
+            renderJobs();
+            scheduleAutoSave();
+        }
+
+        // --- Updates ---
+
+        function updateJob(index, field, value) {
+            currentData.jobs[index][field] = value;
+            if (field === 'title') {
+                renderJobs();
+            }
+            scheduleAutoSave();
+        }
+
+        function updateTags(index, value) {
+            const tags = value.split(/[,，]/).map(t => t.trim()).filter(t => t);
+            currentData.jobs[index].tags = tags;
+            renderJobs();
+            scheduleAutoSave();
+        }
+
+        function updateListItem(jobIndex, type, itemIndex, value) {
+            if (!currentData.jobs[jobIndex].detail) currentData.jobs[jobIndex].detail = {};
+            if (!currentData.jobs[jobIndex].detail[type]) currentData.jobs[jobIndex].detail[type] = [];
+            currentData.jobs[jobIndex].detail[type][itemIndex] = value;
+            scheduleAutoSave();
+        }
+
+        function addListItem(jobIndex, type) {
+            if (!currentData.jobs[jobIndex].detail) currentData.jobs[jobIndex].detail = {};
+            if (!currentData.jobs[jobIndex].detail[type]) currentData.jobs[jobIndex].detail[type] = [];
+            currentData.jobs[jobIndex].detail[type].push("");
+            renderJobs();
+            document.querySelectorAll('.job-item')[jobIndex].classList.remove('collapsed');
+            scheduleAutoSave();
+        }
+
+        function removeListItem(jobIndex, type, itemIndex) {
+            currentData.jobs[jobIndex].detail[type].splice(itemIndex, 1);
+            renderJobs();
+            document.querySelectorAll('.job-item')[jobIndex].classList.remove('collapsed');
+            scheduleAutoSave();
+        }
+
+        // --- Auto Save ---
+        function scheduleAutoSave() {
+            if (autoSaveTimer) clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(() => {
+                saveToLocalStorage();
+            }, 500);
+        }
+
+        // --- Download ---
+
+        function downloadJson() {
+            // 使用固定的 category 值，不从输入框读取
+            const exportData = {
+                category: currentInfo().categoryLabel,
+                jobs: currentData.jobs
+            };
+
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+
+            const exportFileDefaultName = currentInfo().fileName;
+
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        }
+
+        // 页面加载时初始化
+        init();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,743 @@
+:root {
+    --primary-color: #0066cc;
+    --primary-dark: #004c99;
+    --secondary-color: #0d1b2a;
+    --text-color: #333;
+    --light-text: #666;
+    --bg-color: #f8f9fa;
+    --white: #ffffff;
+    --border-radius: 12px;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s ease;
+    --container-width: 1200px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+.container {
+    width: 90%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Navbar */
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    height: 70px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 40px;
+    width: auto;
+    /* filter: invert(1) brightness(0.2); */
+    /* Invert white logo to dark for white navbar */
+    object-fit: contain;
+}
+
+.navbar nav ul {
+    display: flex;
+    gap: 8px;
+    /* Reduced gap for pills */
+    background: #f1f3f5;
+    padding: 5px;
+    border-radius: 50px;
+}
+
+.navbar nav li {
+    list-style: none;
+    /* Ensure no bullets */
+}
+
+.navbar nav a {
+    display: block;
+    font-weight: 500;
+    color: var(--light-text);
+    padding: 8px 24px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.navbar nav a:hover {
+    color: var(--primary-color);
+    background-color: var(--white);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Hero Section */
+.hero {
+    min-height: 80vh;
+    height: auto;
+    background: linear-gradient(135deg, #0d1b2a 0%, #0066cc 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: var(--white);
+    text-align: center;
+    overflow: hidden;
+    padding: 120px 0 80px;
+    /* Add padding for spacing */
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+    opacity: 0.1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 100%;
+    /* Inherit container width */
+    margin: 0 auto;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.hero p {
+    font-size: 20px;
+    margin-bottom: 50px;
+    /* Increased spacing before categories */
+    opacity: 0.9;
+}
+
+/* Category Buttons in Hero (Dark Background Adaptation) */
+.hero .category-btn {
+    color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.hero .category-btn:hover {
+    color: #fff;
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.hero .category-btn.active {
+    background-color: var(--white);
+    color: var(--primary-color);
+    border-color: var(--white);
+    font-weight: 700;
+}
+
+.hero .loading-spinner {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    font-size: 16px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+/* Sections */
+.section {
+    padding: 80px 0;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 15px;
+    color: var(--secondary-color);
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--light-text);
+    margin-bottom: 50px;
+    margin-top: -10px;
+}
+
+/* About Section */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.about-text p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: var(--light-text);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.stat-item h3 {
+    font-size: 24px;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.stat-item p {
+    font-size: 14px;
+    margin: 0;
+}
+
+.img-placeholder {
+    width: 100%;
+    height: 350px;
+    background-color: #e9ecef;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    color: #ced4da;
+    background-image: url('/resource/image.png');
+    background-size: cover;
+    background-position: center;
+    box-shadow: var(--shadow);
+}
+
+/* Jobs Section */
+.jobs-section {
+    background-color: var(--white);
+}
+
+/* Job Categories */
+.job-categories {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.category-btn {
+    background: transparent;
+    border: 2px solid #e9ecef;
+    padding: 10px 25px;
+    border-radius: 30px;
+    font-size: 15px;
+    color: var(--light-text);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+}
+
+.category-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.category-btn.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--white);
+    box-shadow: 0 4px 10px rgba(0, 102, 204, 0.2);
+}
+
+.loading-spinner {
+    text-align: center;
+    color: var(--light-text);
+    font-size: 16px;
+    padding: 40px;
+    width: 100%;
+}
+
+.job-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    /* Allow wrapping */
+    gap: 30px;
+    /* Space between cards */
+}
+
+.job-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    width: auto;
+    min-width: 350px;
+    max-width: 500px;
+    flex: 1 1 350px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: var(--transition);
+    border: 1px solid transparent;
+    text-align: left;
+}
+
+.job-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.job-header h3 {
+    font-size: 22px;
+    color: var(--secondary-color);
+}
+
+.tag {
+    background-color: #e6f7ff;
+    color: var(--primary-color);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.job-info {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    color: var(--light-text);
+    font-size: 14px;
+}
+
+.job-info i {
+    margin-right: 5px;
+    color: var(--primary-color);
+}
+
+.job-snippet {
+    color: var(--light-text);
+    margin-bottom: 25px;
+    font-size: 15px;
+}
+
+/* Contact Section */
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 columns for email and address */
+    gap: 40px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.contact-item {
+    background: var(--white);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.contact-item i {
+    font-size: 30px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.contact-item h4 {
+    margin-bottom: 10px;
+}
+
+.contact-item p {
+    color: var(--light-text);
+}
+
+/* Footer */
+.footer {
+    background-color: var(--secondary-color);
+    color: #aaa;
+    padding: 30px 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: var(--white);
+    width: 90%;
+    max-width: 650px;
+    border-radius: var(--border-radius);
+    padding: 40px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.close-btn:hover {
+    color: var(--text-color);
+}
+
+.modal-header {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.modal-tags {
+    display: flex;
+    gap: 10px;
+}
+
+.modal-tags span {
+    background: #f1f3f5;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--light-text);
+}
+
+.jd-section {
+    margin-bottom: 25px;
+}
+
+.jd-section h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: var(--secondary-color);
+    border-left: 4px solid var(--primary-color);
+    padding-left: 10px;
+}
+
+.jd-section ul {
+    padding-left: 20px;
+    list-style: disc;
+}
+
+.jd-section li {
+    margin-bottom: 8px;
+    color: var(--light-text);
+    font-size: 15px;
+}
+
+/* Apply Form specific */
+.apply-content {
+    max-width: 500px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="tel"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: var(--transition);
+}
+
+input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.file-upload-wrapper {
+    position: relative;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.file-upload-wrapper:hover {
+    border-color: var(--primary-color);
+    background-color: #f8faff;
+}
+
+.file-upload-wrapper input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-upload-visual {
+    color: var(--light-text);
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: var(--primary-color);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar {
+        height: auto;
+        /* Allow header to expand for stacked content */
+        padding: 15px 0;
+        /* Add vertical breathing room */
+        background: rgba(255, 255, 255, 1);
+        /* Solid white */
+    }
+
+    .navbar .container {
+        flex-direction: column;
+        gap: 15px;
+        /* Space between Logo and Tabs */
+        padding-bottom: 0;
+    }
+
+    .navbar nav ul {
+        margin-top: 0;
+        gap: 5px;
+        font-size: 13px;
+        justify-content: center;
+        flex-wrap: nowrap;
+        width: auto;
+        /* Fit to content so pills look centered nicely */
+        margin: 0 auto;
+        /* Center the pill bar */
+        background: #f8f9fa;
+        /* Slightly lighter background */
+        padding: 4px;
+        overflow-x: visible;
+    }
+
+    .navbar nav a {
+        padding: 6px 12px;
+        /* Smaller pills */
+        font-size: 13px;
+        white-space: nowrap;
+        /* Prevent text wrapping like "关于我\n们" */
+    }
+
+
+    .hero {
+        height: auto;
+        padding: 120px 0 80px;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .about-grid,
+    .contact-grid,
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .modal-content {
+        padding: 25px;
+        width: 95%;
+        margin: 10px;
+    }
+
+    /* Mobile Job Card Optimization */
+    .job-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .job-header h3 {
+        margin-bottom: 0;
+        width: 100%;
+        font-size: 20px;
+        /* Slightly adjust size if needed */
+    }
+
+    .tags-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}
+
+/* Toast Notification */
+#toast-notification {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 16px;
+    position: fixed;
+    z-index: 3000;
+    left: 50%;
+    bottom: 30px;
+    font-size: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.5s, bottom 0.5s;
+}
+
+#toast-notification.show {
+    visibility: visible;
+    opacity: 1;
+    bottom: 50px;
+}
+
+#toast-notification.success {
+    background-color: #28a745;
+    /* Green */
+}
+
+#toast-notification.error {
+    background-color: #dc3545;
+    /* Red */
+}
+
+#toast-notification.warning {
+    background-color: #ffc107;
+    /* Orange/Yellow */
+    color: #333;
+}

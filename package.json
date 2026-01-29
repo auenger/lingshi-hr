@@ -1,0 +1,8 @@
+{
+  "name": "lingshi-hr",
+  "version": "1.0.0",
+  "description": "领视招聘官网 - 纯静态站点",
+  "scripts": {
+    "build": "echo 'No build required for static site'"
+  }
+}

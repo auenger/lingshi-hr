@@ -25,7 +25,25 @@ async function initJobBoard() {
 
         // Load first category by default if available
         if (allCategories.length > 0) {
-            selectCategory(allCategories[0].id);
+            let targetCategoryId = allCategories[0].id;
+
+            // Prioritize the category that has data
+            for (const cat of allCategories) {
+                try {
+                    const res = await fetch(cat.file);
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.jobs && data.jobs.length > 0) {
+                            targetCategoryId = cat.id;
+                            break;
+                        }
+                    }
+                } catch (e) {
+                    console.warn(`Failed to check category ${cat.id}`, e);
+                }
+            }
+
+            selectCategory(targetCategoryId);
         }
     } catch (error) {
         console.error('Error initializing job board:', error);
